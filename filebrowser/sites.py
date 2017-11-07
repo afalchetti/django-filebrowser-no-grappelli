@@ -178,10 +178,11 @@ class FileBrowserSite(object):
     """
     filelisting_class = FileListing
 
-    def __init__(self, name=None, app_name='filebrowser', storage=default_storage):
+    def __init__(self, name=None, app_name='filebrowser', storage=default_storage, admin_site=admin_site):
         self.name = name
         self.app_name = app_name
         self.storage = storage
+        self.admin_site = admin_site
 
         self._actions = {}
         self._global_actions = self._actions.copy()
@@ -341,7 +342,7 @@ class FileBrowserSite(object):
 
         request.current_app = self.name
         return TemplateResponse(request, 'filebrowser/index.html', dict(
-            admin_site.each_context(request),
+            self.admin_site.each_context(request),
             **{
                 'p': p,
                 'page': page,
@@ -385,7 +386,7 @@ class FileBrowserSite(object):
 
         request.current_app = self.name
         return TemplateResponse(request, 'filebrowser/createdir.html', dict(
-            admin_site.each_context(request),
+            self.admin_site.each_context(request),
             **{
                 'form': form,
                 'query': query,
@@ -404,7 +405,7 @@ class FileBrowserSite(object):
 
         request.current_app = self.name
         return TemplateResponse(request, 'filebrowser/upload.html', dict(
-            admin_site.each_context(request),
+            self.admin_site.each_context(request),
             **{
                 'query': query,
                 'title': _(u'Select files to upload'),
@@ -439,7 +440,7 @@ class FileBrowserSite(object):
 
         request.current_app = self.name
         return TemplateResponse(request, 'filebrowser/delete_confirm.html', dict(
-            admin_site.each_context(request),
+            self.admin_site.each_context(request),
             **{
                 'fileobject': fileobject,
                 'filelisting': filelisting,
@@ -518,7 +519,7 @@ class FileBrowserSite(object):
 
         request.current_app = self.name
         return TemplateResponse(request, 'filebrowser/detail.html', dict(
-            admin_site.each_context(request),
+            self.admin_site.each_context(request),
             **{
                 'form': form,
                 'fileobject': fileobject,
@@ -543,7 +544,7 @@ class FileBrowserSite(object):
 
         request.current_app = self.name
         return TemplateResponse(request, 'filebrowser/version.html', dict(
-            admin_site.each_context(request),
+            self.admin_site.each_context(request),
             **{
                 'fileobject': fileobject,
                 'query': query,
